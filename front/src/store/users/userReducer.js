@@ -1,12 +1,22 @@
-import {LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, REGISTER_USER_FAILURE, REGISTER_USER_SUCCESS } from "./userActionTypes";
+import {
+    GET_ALL_USERS,
+    LOGIN_USER_FAILURE,
+    LOGIN_USER_SUCCESS,
+    LOGOUT_USER,
+    REGISTER_USER_FAILURE,
+    REGISTER_USER_SUCCESS
+} from "./userActionTypes";
 
 const initialState = {
+    users: [],
     registerError: null,
     loginError: null,
     user: null
 }
 const userReducer = (state=initialState, action) => {
     switch (action.type) {
+        case GET_ALL_USERS:
+            return {...state, users: action.value}
         case REGISTER_USER_SUCCESS:
             return {...state, registerError: null}
         case REGISTER_USER_FAILURE:

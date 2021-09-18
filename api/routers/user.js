@@ -19,13 +19,13 @@ const storage = multer.diskStorage({
 const upload = multer({storage})
 
 router.get('/', async (req, res) => {
-        try {
-            const users = await User.find()
-            res.send(users);
-        } catch (e) {
-            res.status(500).send({error: e});
-        }
-    });
+    try {
+        const users = await User.find()
+        res.send(users);
+    } catch (e) {
+        res.status(500).send({error: e});
+    }
+});
 
 
 router.post('/', upload.single('avatar'), async (req, res) => {

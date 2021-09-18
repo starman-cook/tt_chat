@@ -1,6 +1,7 @@
 import { push } from 'connected-react-router'
 import axiosApi from '../../axiosApi'
 import {
+    GET_ALL_USERS,
     LOGIN_USER_FAILURE,
     LOGIN_USER_SUCCESS,
     LOGOUT_USER,
@@ -20,6 +21,18 @@ const loginUserSuccess = (user) => {
 }
 const loginUserFailure = error => {
     return { type: LOGIN_USER_FAILURE, error }
+}
+const getAllUsersSuccess = (value) => ({type: GET_ALL_USERS, value})
+
+export const getAllUsers = () => {
+    return async dispatch => {
+        try {
+            const response = await axiosApi.get('/users')
+            dispatch(getAllUsersSuccess(response.data))
+        } catch (e) {
+            console.log(e)
+        }
+    }
 }
 
 export const registerUser = userData => {

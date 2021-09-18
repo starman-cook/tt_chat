@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react"
 import './ChatPage.css'
 import {useDispatch, useSelector} from "react-redux";
 import {apiURL} from "../../apiURL";
-import {getAllUserChats} from "../../store/chats/chatActions";
+import {createChat, getAllUserChats, setCurrentChatId} from "../../store/chats/chatActions";
 import {getAllChatMessages, sendChatMessage} from "../../store/messages/messageActions";
 import Message from "../../components/Message/Message";
+import {getAllUsers} from "../../store/users/userActions";
 
 const ChatPage = () => {
     const dispatch = useDispatch()
@@ -12,7 +13,9 @@ const ChatPage = () => {
     const chats = useSelector(state => state.chats.chats)
     const messages = useSelector(state => state.messages.messages)
     const [input, setInput] = useState("")
-    const [currentChatId, setCurrentChatId] = useState(null)
+    const currentChatId = useSelector(state => state.chats.currentChatId)
+    const users = useSelector(state => state.users.users)
+    let allUsers
 
     let left
     let middle
@@ -20,12 +23,14 @@ const ChatPage = () => {
 
     useEffect(() => {
         dispatch(getAllUserChats(user?._id))
+        dispatch(getAllUsers())
     }, [])
 
 
 
     const getMessages = (chatId) => {
-        setCurrentChatId(chatId)
+        setInput("")
+        dispatch(setCurrentChatId(chatId))
         dispatch(getAllChatMessages(chatId))
     }
     if (chats.length) {
@@ -38,6 +43,33 @@ const ChatPage = () => {
             </div>
         })
     }
+    const startChatting = async (interlocutor) => {
+        const obj = {
+            participants: [{
+                userId: user._id,
+                userAvatar: user.avatar,
+                username: user.username
+            }, {
+                userId: interlocutor._id,
+                userAvatar: interlocutor.avatar,
+                username: interlocutor.username
+            }]
+        }
+        await dispatch(createChat(obj))
+        await dispatch(getAllUserChats(user?._id))
+    }
+
+    if (users?.length) {
+        let filteredUsers = users.filter(u => u._id !== user._id)
+        allUsers = filteredUsers.map(el => {
+            const imagePath = `${apiURL}/${el.avatar}`
+            return <div onClick={() => {startChatting(el)}} key={el._id} className={"ChatPage__left_item"}>
+                <img className={"ChatPage__chat__image"} src={imagePath} alt={el.username}/>
+                <p className={"ChatPage__chat__name"}>{el.username}</p>
+            </div>
+        })
+    }
+
     useEffect(() => {
         const arrImages = document.getElementsByClassName("Message__image")
         arrImages.length > 0 ? arrImages[arrImages.length - 1].style.display = "block" : console.log("no messages yet")
@@ -84,11 +116,13 @@ const ChatPage = () => {
                 <div className={"ChatPage__left"}>
                     <p>My chats: </p>
                     {left}
+                    <p>All users:</p>
+                    {allUsers}
                 </div>
                 <div className={"ChatPage__middle"}>
                     {middle}
                     {currentChatId && <div className={"ChatPage__middle__inputBlock"}>
-                        <textarea className={"ChatPage__middle__textarea"} placeholder={"Type your message"} onChange={(event) => {inputHandler(event)}} />
+                        <textarea value={input} className={"ChatPage__middle__textarea"} placeholder={"Type your message"} onChange={(event) => {inputHandler(event)}} />
                         <button disabled={(input).trim().length === 0} className={"ChatPage__middle__btn"} onClick={() => {submitMessage()}}>Send</button>
                     </div>}
                 </div>
