@@ -1,21 +1,20 @@
-import React, { useRef, useState } from "react";
-// import ButtonWhite from "../Buttons/ButtonWhite/ButtonWhite";
+import React, { useRef, useState } from "react"
 import "./FileInput.css"
 
 const FileInput = (props) => {
     const inputRef = useRef();
-    const [filename, setFilename] = useState("");
+    const [filename, setFilename] = useState("")
 
     const onFileChange = (e) => {
         if (e.target.files[0]) {
-            setFilename(e.target.files[0].name);
+            setFilename(e.target.files[0].name)
         } else {
-            setFilename("");
+            setFilename("")
         }
         props.onChange(e);
     };
     const activateInput = () => {
-        inputRef.current.click();
+        inputRef.current.click()
     };
 
     return (
@@ -38,4 +37,4 @@ const FileInput = (props) => {
     );
 };
 
-export default FileInput;
+export default FileInput

@@ -16,13 +16,13 @@ const UserSchema = new Schema({
                 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
                 if (!regex.test(value)) return false
             },
-            message: 'Вы ввели неправильный email'
+            message: 'Incorrect input for email'
         }, {
             validator: async value => {
                 const user = await User.findOne({ email: value })
                 if (user) return false
             },
-            message: 'Такой сотрудник уже зарегистрирован'
+            message: 'This email is already registered'
         }]
     },
     username: {

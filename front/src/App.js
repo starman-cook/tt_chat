@@ -1,11 +1,11 @@
 import React from 'react'
-import {Redirect, Route, Switch, withRouter } from "react-router-dom";
-import Register from "./containers/Register/Register";
-import Login from "./containers/Login/Login";
-import {useSelector} from "react-redux";
+import {Redirect, Route, Switch, withRouter } from "react-router-dom"
+import Register from "./containers/Register/Register"
+import Login from "./containers/Login/Login"
+import {useSelector} from "react-redux"
 
 function App() {
-  const user = useSelector(state => state.users.user);
+  const user = useSelector(state => state.users.user)
   return (
     <>
       <Switch>
@@ -21,11 +21,11 @@ function App() {
       </Switch>
 
     </>
-  );
+  )
 }
 
 const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
-  return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />;
-};
+  return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />
+}
 
-export default App;
+export default App

@@ -1,5 +1,5 @@
-import React from "react";
-import './FormElement.css';
+import React from "react"
+import './FormElement.css'
 
 const FormElement = ({
                          name,
@@ -32,4 +32,4 @@ const FormElement = ({
     );
 };
 
-export default FormElement;
+export default FormElement

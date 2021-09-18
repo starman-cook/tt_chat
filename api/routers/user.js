@@ -48,11 +48,11 @@ router.post('/', upload.single('avatar'), async (req, res) => {
 router.post('/sessions', async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-        return res.status(400).send({ error: 'Неправильный email или пароль!' });
+        return res.status(400).send({ error: 'Incorrect email or password!' });
     }
     const isMatch = await user.checkPassword(req.body.password);
     if (!isMatch) {
-        return res.status(400).send({ error: 'Неправильный email или пароль!' });
+        return res.status(400).send({ error: 'Incorrect email or password!' });
     }
     await user.generationToken('');
     await user.save({ validateBeforeSave: false });

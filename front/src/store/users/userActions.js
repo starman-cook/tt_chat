@@ -6,7 +6,7 @@ import {
     LOGOUT_USER,
     REGISTER_USER_FAILURE,
     REGISTER_USER_SUCCESS
-} from "./userActionTypes";
+} from "./userActionTypes"
 
 
 const registerUserSuccess = () => {
@@ -56,7 +56,7 @@ export const loginUser = userData => {
 export const logoutUser = () => {
     return async dispatch => {
         try {
-            await axiosApi.delete('/users/sessions');
+            await axiosApi.delete('/users/sessions')
         } catch (error) {
             console.log(error);
         }

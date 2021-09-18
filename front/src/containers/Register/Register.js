@@ -6,7 +6,7 @@ import './Register.css'
 import { registerUser } from '../../store/users/userActions'
 import { push } from 'connected-react-router'
 import { NavLink } from 'react-router-dom'
-import FileInput from "../../components/FileInput/FileInput";
+import FileInput from "../../components/FileInput/FileInput"
 
 const Register = () => {
     const dispatch = useDispatch()
@@ -34,7 +34,7 @@ const Register = () => {
         event.preventDefault()
         const formData = new FormData();
         Object.keys(state).forEach((key) => {
-            formData.append(key, state[key]);
+            formData.append(key, state[key])
         });
         await dispatch(registerUser(formData))
     }
