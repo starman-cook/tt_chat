@@ -4,6 +4,8 @@
     padding: 15px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px gray;
+    background: #b6c1b6;
+
 }
 .Login__close {
     margin-left: auto;

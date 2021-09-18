@@ -1,0 +1,1 @@
+export const GET_USER_CHATS = 'GET_USER_CHATS'

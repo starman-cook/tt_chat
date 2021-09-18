@@ -5,7 +5,7 @@ const initialState = {
     loginError: null,
     user: null
 }
-const usersReducer = (state=initialState, action) => {
+const userReducer = (state=initialState, action) => {
     switch (action.type) {
         case REGISTER_USER_SUCCESS:
             return {...state, registerError: null}
@@ -21,4 +21,4 @@ const usersReducer = (state=initialState, action) => {
             return state
     }
 }
-export default usersReducer
+export default userReducer

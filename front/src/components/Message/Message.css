@@ -1,0 +1,43 @@
+.Message {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    background: #92a092;
+    border-radius: 10px;
+    padding: 5px 10px;
+    margin: 15px 0;
+}
+.Message__header {
+    display: flex;
+    align-items: center;
+}
+.Message__name {
+    margin-left: 20px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+}
+.Message__image {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: none;
+}
+
+.Message__text {
+    color: black;
+    font-size: 20px;
+    margin: 0;
+}
+
+.Message__date {
+    text-align: right;
+    font-size: 10px;
+    color: white;
+}
+.myMessage {
+    margin-left: auto;
+    background: #6fd26f;
+}

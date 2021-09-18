@@ -54,7 +54,7 @@ router.post('/sessions', async (req, res) => {
     if (!isMatch) {
         return res.status(400).send({ error: 'Incorrect email or password!' });
     }
-    await user.generationToken('');
+    await user.generationToken();
     await user.save({ validateBeforeSave: false });
 
     res.send({ message: 'Email and password correct!', user });

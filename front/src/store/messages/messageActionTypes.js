@@ -1,0 +1,3 @@
+export const GET_CHAT_MESSAGES = 'GET_CHAT_MESSAGES'
+
+export const INIT_MESSAGES = 'INIT_MESSAGES'

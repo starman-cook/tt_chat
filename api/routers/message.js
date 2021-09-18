@@ -2,9 +2,10 @@ const express = require('express')
 const auth = require('../middleware/auth')
 const router = express.Router()
 const Message = require('../models/Message')
+const User = require('../models/User')
 
-// add auth!
-router.post("/", auth, async (req, res) => {
+
+router.post("/", async (req, res) => {
     const message = new Message(req.body)
     try {
         await message.save()

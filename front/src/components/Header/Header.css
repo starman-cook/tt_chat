@@ -1,0 +1,42 @@
+.Header {
+    background: #e5f6e5;
+    box-shadow: 1px 0 7px 1px gray;
+}
+.Header__container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.Header__btn {
+    padding: 15px;
+    background: orangered;
+    color: white;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    margin-left: 20px;
+    transition: 0.3s;
+}
+.Header__btn:hover {
+    transform: scale(1.1);
+}
+.Header__userInfo {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.Header__image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 8px 1px orangered;
+}
+.Header__name {
+    font-weight: bold;
+    font-size: 30px;
+    color: orangered;
+    margin-left: 50px;
+}

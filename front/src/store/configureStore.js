@@ -2,14 +2,18 @@ import { applyMiddleware, combineReducers, compose, createStore } from "redux"
 import thunkMiddleware from "redux-thunk"
 import { connectRouter, routerMiddleware } from "connected-react-router"
 import { createBrowserHistory } from "history"
-import usersReducer from "./users/userReducer"
+import userReducer from "./users/userReducer"
+import chatReducer from "./chats/chatReducer"
+import messageReducer from "./messages/messageReducer"
 
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 export const history = createBrowserHistory()
 
 const rootReducer = combineReducers({
-    users: usersReducer,
+    users: userReducer,
+    chats: chatReducer,
+    messages: messageReducer,
     router: connectRouter(history),
 });
 

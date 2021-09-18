@@ -16,9 +16,7 @@ router.post("/", auth, async (req, res) => {
 
 router.get("/:userId", auth, async (req, res) => {
     try {
-        const chats = await Chat.find({
-            participants: { $in: [req.params.userId]}
-        })
+        const chats = await Chat.find({"participants.userId" : req.params.userId})
         res.send(chats)
     } catch (err) {
         res.status(500).send({error: err})

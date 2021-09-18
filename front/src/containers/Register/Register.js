@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FormElement from '../../components/FormElement/FormElement'
 // import icon from "../../assets/images/icon-close.png"
@@ -7,6 +7,7 @@ import { registerUser } from '../../store/users/userActions'
 import { push } from 'connected-react-router'
 import { NavLink } from 'react-router-dom'
 import FileInput from "../../components/FileInput/FileInput"
+import {initMessages} from "../../store/messages/messageActions"
 
 const Register = () => {
     const dispatch = useDispatch()
@@ -45,8 +46,12 @@ const Register = () => {
         setState((prevState) => ({
             ...prevState,
             [name]: file,
-        }));
-    };
+        }))
+    }
+
+    useEffect(() => {
+        dispatch(initMessages())
+    }, [])
 
     return (
         <div className="Register">

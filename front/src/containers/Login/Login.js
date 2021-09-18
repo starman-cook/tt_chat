@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import FormElement from '../../components/FormElement/FormElement'
 import './Login.css'
 import { loginUser } from '../../store/users/userActions'
-import { push } from 'connected-react-router'
 import { NavLink } from 'react-router-dom'
+import {initMessages} from "../../store/messages/messageActions";
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -25,9 +25,11 @@ const Login = () => {
         console.log(state)
         await dispatch(loginUser(state))
     }
-    const closeHandler = () => {
-        dispatch(push('/'))
-    }
+
+    useEffect(() => {
+        dispatch(initMessages())
+    }, [])
+
     return (
         <div className="Login">
             <div className="flex-center">
