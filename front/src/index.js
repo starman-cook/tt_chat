@@ -2,16 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
+import { store, history } from "./store/configureStore";
+import axiosApi from "./axiosApi";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const app = (
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <App />
+        </ConnectedRouter>
+    </Provider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+axiosApi.interceptors.request.use(req => {
+    try {
+        req.headers['Authorization'] = store.getState().users.user ? store.getState().users.user.token[0] : ''
+    } catch (err) {
+        console.log(err);
+    }
+    return req;
+});
+
+ReactDOM.render(app, document.getElementById("root"));

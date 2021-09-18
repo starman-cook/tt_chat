@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import {Redirect, Route, Switch, withRouter } from "react-router-dom";
+import Register from "./containers/Register/Register";
+import Login from "./containers/Login/Login";
+import {useSelector} from "react-redux";
 
 function App() {
+  const user = useSelector(state => state.users.user);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Switch>
+          {/*<ProtectedRoute*/}
+          {/*  isAllowed={user && user.token}*/}
+          {/*  redirectTo={"/register"}*/}
+          {/*  path="/"*/}
+          {/*  exact*/}
+          {/*  component={Chat}*/}
+          {/*/>*/}
+          <Route path="/register" exact component={withRouter(Register)} />
+          <Route path="/login" exact component={withRouter(Login)} />
+      </Switch>
+
+    </>
   );
 }
+
+const ProtectedRoute = ({ isAllowed, redirectTo, ...props }) => {
+  return isAllowed ? <Route {...props} /> : <Redirect to={redirectTo} />;
+};
 
 export default App;

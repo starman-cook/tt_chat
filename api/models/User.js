@@ -7,25 +7,24 @@ const SALT_WORK_FACTOR = 10
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
-    email: String,
-    // email: {
-    //     type: String,
-    //     required: true,
-    //     unique: true,
-    //     validate: [{
-    //         validator: async value => {
-    //             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    //             if (!regex.test(value)) return false
-    //         },
-    //         message: 'Вы ввели неправильный email'
-    //     }, {
-    //         validator: async value => {
-    //             const user = await User.findOne({ email: value })
-    //             if (user) return false
-    //         },
-    //         message: 'Такой сотрудник уже зарегистрирован'
-    //     }]
-    // },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        validate: [{
+            validator: async value => {
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+                if (!regex.test(value)) return false
+            },
+            message: 'Вы ввели неправильный email'
+        }, {
+            validator: async value => {
+                const user = await User.findOne({ email: value })
+                if (user) return false
+            },
+            message: 'Такой сотрудник уже зарегистрирован'
+        }]
+    },
     username: {
         type: String,
         required: true
