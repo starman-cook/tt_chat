@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import './ChatPage.css'
 import {useDispatch, useSelector} from "react-redux";
 import {apiURL} from "../../apiURL";
 import {createChat, getAllUserChats, setCurrentChatId} from "../../store/chats/chatActions";
-import {getAllChatMessages, sendChatMessage} from "../../store/messages/messageActions";
+import {addMessage, getAllChatMessages, sendChatMessage} from "../../store/messages/messageActions";
 import Message from "../../components/Message/Message";
 import {getAllUsers} from "../../store/users/userActions";
 
@@ -15,6 +15,7 @@ const ChatPage = () => {
     const [input, setInput] = useState("")
     const currentChatId = useSelector(state => state.chats.currentChatId)
     const users = useSelector(state => state.users.users)
+    const scrollRef = useRef(null)
     let allUsers
 
     let left
@@ -55,6 +56,7 @@ const ChatPage = () => {
                 username: interlocutor.username
             }]
         }
+        setInput("")
         await dispatch(createChat(obj))
         await dispatch(getAllUserChats(user?._id))
     }
@@ -71,24 +73,28 @@ const ChatPage = () => {
     }
 
     useEffect(() => {
+        scrollRef.current?.scrollIntoView({behavior: "smooth"})
         const arrImages = document.getElementsByClassName("Message__image")
         arrImages.length > 0 ? arrImages[arrImages.length - 1].style.display = "block" : console.log("no messages yet")
     }, [messages])
+
 
     if (messages.length) {
         middle = messages.map(el => {
             const myMessage = el.sender?.id === user._id
             const imagePath = `${apiURL}/${el.sender?.avatar}`
 
-            return <Message
-                key={el._id}
-                image={imagePath}
-                alt={el._id}
-                message={el.message}
-                myMessage={myMessage}
-                username={el.sender?.username}
-                date={el.createdAt}
-            />
+            return <div className={myMessage ? "ChatPage__messageFrame ChatPage__messageFrame--myMessage" : "ChatPage__messageFrame"} ref={scrollRef}>
+                        <Message
+                        key={el._id}
+                        image={imagePath}
+                        alt={el._id}
+                        message={el.message}
+                        myMessage={myMessage}
+                        username={el.sender?.username}
+                        date={el.createdAt}
+                        />
+                    </div>
         })
     } else {
         middle = (<p>No messages yet</p>)
@@ -105,6 +111,8 @@ const ChatPage = () => {
             message: input
         }
         dispatch(sendChatMessage(obj))
+        dispatch(addMessage(obj))
+        setInput("")
     }
     const inputHandler = (e) => {
         setInput(e.target.value)
@@ -119,15 +127,19 @@ const ChatPage = () => {
                     <p>All users:</p>
                     {allUsers}
                 </div>
-                <div className={"ChatPage__middle"}>
-                    {middle}
+
+                <div className={"ChatPage__middle--frame"}>
+                    <div className={"ChatPage__middle"}>
+                        {middle}
+                    </div>
+
                     {currentChatId && <div className={"ChatPage__middle__inputBlock"}>
                         <textarea value={input} className={"ChatPage__middle__textarea"} placeholder={"Type your message"} onChange={(event) => {inputHandler(event)}} />
                         <button disabled={(input).trim().length === 0} className={"ChatPage__middle__btn"} onClick={() => {submitMessage()}}>Send</button>
                     </div>}
                 </div>
-
                 <div className={"ChatPage__right"}>
+                    <p>People online: </p>
                     {right}
                 </div>
 

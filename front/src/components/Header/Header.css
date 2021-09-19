@@ -1,8 +1,11 @@
 .Header {
+
     background: #e5f6e5;
     box-shadow: 1px 0 7px 1px gray;
+    height: 15vh;
 }
 .Header__container {
+    height: 15vh;
     max-width: 1000px;
     margin: 0 auto;
     display: flex;

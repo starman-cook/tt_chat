@@ -1,8 +1,8 @@
 .Message {
     box-sizing: border-box;
+    min-width: 150px;
     display: flex;
     flex-direction: column;
-    max-width: 300px;
     background: #92a092;
     border-radius: 10px;
     padding: 5px 10px;

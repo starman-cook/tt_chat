@@ -1,10 +1,12 @@
-import {GET_CHAT_MESSAGES, INIT_MESSAGES} from "./messageActionTypes";
+import {ADD_MESSAGE, GET_CHAT_MESSAGES, INIT_MESSAGES} from "./messageActionTypes";
 import axiosApi from "../../axiosApi";
 
 
 export const getChatMessagesSuccess = (value) => ({type: GET_CHAT_MESSAGES, value})
 
 export const initMessages = () => ({type: INIT_MESSAGES})
+
+export const addMessage = (value) => ({type: ADD_MESSAGE, value})
 
 export const getAllChatMessages = (chatId) => {
     return async dispatch => {
