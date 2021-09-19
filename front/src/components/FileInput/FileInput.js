@@ -13,7 +13,8 @@ const FileInput = (props) => {
         }
         props.onChange(e);
     };
-    const activateInput = () => {
+    const activateInput = (e) => {
+        e.preventDefault()
         inputRef.current.click()
     };
 
@@ -32,7 +33,7 @@ const FileInput = (props) => {
                    value={filename}
                    onClick={activateInput}
             />
-            <button className="FileInput__btn" onClick={activateInput}>Choose file</button>
+            <button className="FileInput__btn" onClick={(event) => {activateInput(event)}}>Choose file</button>
         </>
     );
 };

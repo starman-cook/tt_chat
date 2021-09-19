@@ -1,10 +1,12 @@
 .Register {
     max-width: 500px;
-    margin: 100px auto;
+    margin: 10vh auto 20vh auto;
     padding: 15px;
+    box-sizing: border-box;
     border-radius: 10px;
     box-shadow: 2px 2px 5px gray;
     background: #b6c1b6;
+    height: 55vh;
 }
 .Register__close {
     margin-left: auto;
