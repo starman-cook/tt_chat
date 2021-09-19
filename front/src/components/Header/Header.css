@@ -1,13 +1,15 @@
 .Header {
-
-    background: #e5f6e5;
     box-shadow: 1px 0 7px 1px gray;
     height: 15vh;
+    background:  url('../../assets/images/main_bg.jpg')center /cover no-repeat,
+    linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.9));
+    background-blend-mode: color;
 }
 .Header__container {
     height: 15vh;
     max-width: 1000px;
     margin: 0 auto;
+    padding: 0 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

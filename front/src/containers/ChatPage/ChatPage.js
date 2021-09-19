@@ -7,6 +7,8 @@ import {addMessage, getAllChatMessages, sendChatMessage} from "../../store/messa
 import Message from "../../components/Message/Message";
 import {getAllUsers} from "../../store/users/userActions";
 import {io} from 'socket.io-client'
+import UserIconItem from "../../components/UserIconItem/UserIconItem";
+import axiosApi from "../../axiosApi";
 
 const ChatPage = () => {
     const dispatch = useDispatch()
@@ -67,11 +69,13 @@ const ChatPage = () => {
     if (chats.length) {
         left = chats.map((el, i) => {
             const otherUser = el.participants.find(p => p.userId !== user._id)
-            const imagePath = `${apiURL}/${otherUser?.userAvatar}`
-            return <div onClick={() => {getMessages(el)}} key={i} className={"ChatPage__left_item"}>
-                <img className={"ChatPage__chat__image"} src={imagePath} alt={otherUser.username}/>
-                <p className={"ChatPage__chat__name"}>{otherUser.username}</p>
-            </div>
+
+            return <UserIconItem
+                key={i}
+                avatar={otherUser?.userAvatar}
+                username={otherUser.username}
+                click={() => {getMessages(el)}}
+            />
         })
     }
     const startChatting = async (interlocutor) => {
@@ -94,11 +98,12 @@ const ChatPage = () => {
     if (users?.length) {
         let filteredUsers = users.filter(u => u._id !== user._id)
         allUsers = filteredUsers.map((el, i) => {
-            const imagePath = `${apiURL}/${el.avatar}`
-            return <div onClick={() => {startChatting(el)}} key={i} className={"ChatPage__left_item"}>
-                <img className={"ChatPage__chat__image"} src={imagePath} alt={el.username}/>
-                <p className={"ChatPage__chat__name"}>{el.username}</p>
-            </div>
+            return <UserIconItem
+                key={i}
+                avatar={el.avatar}
+                username={el.username}
+                click={async () => {await startOrGetMessages(el)}}
+            />
         })
     }
 
@@ -133,31 +138,37 @@ const ChatPage = () => {
                     </div>
         })
     } else {
-        middle = (<p>No messages yet</p>)
+        middle = (<p className={"ChatPage__smallTitle"}>No messages yet</p>)
     }
 
-    const startOrGetMessages = async (user) => {
-        console.log(user)
+    const startOrGetMessages = async (u) => {
         let checkChats = null
-        chats.forEach(el => {
-            if (el.participants.find(p => p.userId === user.userId)) {
-                checkChats = el
+        try{
+            const response = await axiosApi.get(`/chats/${user._id}`)
+            response.data.forEach(el => {
+                if (el.participants.find(p => p.userId === (u.userId || u._id))) {
+                    checkChats = el
+                }
+            })
+            if (checkChats) {
+                getMessages(checkChats)
+            } else {
+                await startChatting(u)
             }
-        })
-        if (checkChats) {
-            getMessages(checkChats)
-        } else {
-            await startChatting(user)
+        } catch (err) {
+            console.log(err)
         }
+
     }
 
     if (onlineUsers.length) {
         right = onlineUsers.map((el, i) => {
-            const imagePath = `${apiURL}/${el.avatar}`
-            return <div onClick={() => {startOrGetMessages(el)}} key={i} className={"ChatPage__left_item"}>
-                <img className={"ChatPage__chat__image"} src={imagePath} alt={el.username}/>
-                <p className={"ChatPage__chat__name"}>{el.username}</p>
-            </div>
+            return <UserIconItem
+                key={i}
+                avatar={el.avatar}
+                username={el.username}
+                click={async () => {await startOrGetMessages(el)}}
+            />
         })
     }
 
@@ -191,9 +202,9 @@ const ChatPage = () => {
         <div className={"ChatPage"}>
             <div className={"ChatPage__mainContent"}>
                 <div className={"ChatPage__left"}>
-                    <p>My chats: </p>
+                    <p className={"ChatPage__smallTitle"}>My chats: </p>
                     {left}
-                    <p>All users:</p>
+                    <p className={"ChatPage__smallTitle"}>All users:</p>
                     {allUsers}
                 </div>
 
@@ -208,7 +219,7 @@ const ChatPage = () => {
                     </div>}
                 </div>
                 <div className={"ChatPage__right"}>
-                    <p>People online: </p>
+                    <p className={"ChatPage__smallTitle"}>People online: </p>
                     {right}
                 </div>
 
