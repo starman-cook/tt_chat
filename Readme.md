@@ -1,23 +1,23 @@
-#Instructions
+## Instructions
 
 ----------
 
 All bash scripts are ready, just write in terminal all the coomands needed for launch:
 
 
-##1_startBackend.sh##
+* 1_startBackend.sh
 
 
-##2_startFrontend.sh##
+* 2_startFrontend.sh
 
 
-##3_startSockets.sh##
+* 3_startSockets.sh
 
 
-##4_installDependenciesTests.sh##
+* 4_installDependenciesTests.sh
 
 
-##5_launchTests.sh##
+* 5_launchTests.sh
 
 
 
@@ -32,7 +32,7 @@ In some cases tests may through an Error of PATH for chrome, in that case add PA
 
 In case of version conflicts of chrome, use this link to download your version and then just replace the file in chromedriver_win32 folder
 
-LINK: http://chromedriver.storage.googleapis.com/index.html
+LINK: `http://chromedriver.storage.googleapis.com/index.html`
 
 
 ----------
