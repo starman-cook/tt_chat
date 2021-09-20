@@ -172,6 +172,7 @@ const ChatPage = () => {
         })
     }
 
+    const receiver = currentChat?.participants.find(p => p.userId !== user._id)
     const submitMessage = () => {
         const obj = {
             chatId: currentChat._id,
@@ -185,7 +186,6 @@ const ChatPage = () => {
         dispatch(sendChatMessage(obj))
         dispatch(addMessage(obj))
         setInput("")
-        const receiver = currentChat.participants.find(p => p.userId !== user._id)
         socket.current.emit("sendMessage", {
             userId: user._id, username: user.username, avatar: user.avatar
         } ,
@@ -209,6 +209,15 @@ const ChatPage = () => {
                 </div>
 
                 <div className={"ChatPage__middle--frame"}>
+
+                    <div className={"ChatPage__interlocutorInfo"}>
+                        {receiver &&
+                        <div className={"ChatPage__interlocutorInfo__inner"}>
+                            <img className={"ChatPage__interlocutorInfo__image"} src={`${apiURL}/${receiver.userAvatar}`} alt={receiver.username}/>
+                            <p className={"ChatPage__interlocutorInfo__name"}>{receiver.username}</p>
+                        </div>}
+                    </div>
+
                     <div className={"ChatPage__middle"}>
                         {middle}
                     </div>
