@@ -27,7 +27,7 @@ Given(/^user "([^"]*)" logged in in browser "([^"]*)"$/, async function (user, b
     this.driver[user].wait(until.elementLocated(By.xpath('//*[@id="email"]')))
 
     const emailInput = await this.driver[user].findElement(By.xpath('//*[@id="email"]'));
-    emailInput.click();
+    // emailInput.click();
 
     const emailInput1 = await this.driver[user].findElement(By.xpath('//*[@id="email"]'));
     emailInput1.sendKeys(logins[user])
@@ -40,92 +40,36 @@ Given(/^user "([^"]*)" logged in in browser "([^"]*)"$/, async function (user, b
 
     this.driver[user].wait(until.elementLocated(By.className('UserIconItem__image')), 3000)
         .then(icon => {
-            console.log(icon)
             icon.click()
         })
 });
-When(/^user "([^"]*)" sends a "([^"]*)" to user "([^"]*)"$/, function (Who, What, Whom) {
+When(/^user "([^"]*)" sends a "([^"]*)" to user "([^"]*)"$/, async function (user, message, interlocutor) {
+    const textArea = await this.driver[user].findElement(By.xpath('//*[@id="root"]/div[2]/div/div[2]/div[3]/textarea'));
+    textArea.sendKeys(message)
+
+    const sendBtn = await this.driver[user].findElement(By.xpath('//*[@id="root"]/div[2]/div/div[2]/div[3]/button'));
+    sendBtn.click()
 
 });
-Then(/^user "([^"]*)" sees "([^"]*)"  in the message window$/, function () {
-
+Then(/^user "([^"]*)" sees "([^"]*)"  in the message window$/, async function (user, text) {
+    this.driver[user].wait(until.elementLocated(By.xpath(`//*[@id="root"]/div[2]/div/div[2]/div[2]`)), 3000)
+        .then(async message => {
+            const res = await message.getText()
+            const arr = res.split("\n")
+            const index = arr.length - 2
+            console.log(arr[index])
+            console.log(text)
+            console.log(arr[index] === text)
+        })
 });
-Then(/^user "([^"]*)" sees "([^"]*)" in the message window$/, function () {
-
+Then(/^user "([^"]*)" sees "([^"]*)" in the message window$/,async function (user, text) {
+    this.driver[user].wait(until.elementLocated(By.xpath(`//*[@id="root"]/div[2]/div/div[2]/div[2]`)), 3000)
+        .then(async message => {
+            const res = await message.getText()
+            const arr = res.split("\n")
+            const index = arr.length - 2
+            console.log(arr[index])
+            console.log(text)
+            console.log(arr[index] === text)
+        })
 });
-
-// const {Then, When, Given} = require('cucumber');
-// const { Builder, By, until } = require('selenium-webdriver');
-//
-// Given(/^user "([^"]*)" logged in in browser "([^"]*)"$/, async function (user, browser) {
-//     if (!this.driver) {
-//         this.driver = {}
-//     }
-//
-//
-//     this.driver[user] = new Builder()
-//         .forBrowser('chrome')
-//         .build();
-//     await this.driver[user].get('http://localhost:3000');
-//
-//     this.driver[user].wait(until.elementLocated(By.className('Header')));
-//
-//     //FIND LOGIN BUTTON AND THEN CLICK
-//     // const productName = await productElements[i].findElement(By.tagName('h3')).getText();
-//     const loginButton = await this.driver[user].findElement(By.xpath('//*[@id="root"]/div[1]/div/div/button[1]'));
-//     console.log(loginButton)
-//     loginButton.click()
-//     // const xxx = await buttons[0].findElement(By.tagName('h3')).getText();
-// });
-// When(/^user "([^"]*)" sends a "([^"]*)" to user "([^"]*)"$/, function (who, what, whom) {
-//
-// });
-// Then(/^user "([^"]*)" sees "([^"]*)"  in the message window$/, function () {
-//
-// });
-// Then(/^user "([^"]*)" sees "([^"]*)" in the message window$/, function () {
-//
-// });
-
-
-
-
-
-
-//
-// var {Then} = require('cucumber');
-// var {When} = require('cucumber');
-// var {Given} = require('cucumber');
-// const { Builder, By, until } = require('selenium-webdriver');
-// const driver = {};
-//
-// Given(/^user "([^"]*)" logged in in browser "([^"]*)"$/, async function (user, browser) {
-//     if (!this.driver) {
-//         this.driver = {}
-//     }
-//
-//
-//     this.driver[user] = new Builder()
-//         .forBrowser('chrome')
-//         .build();
-//     await this.driver[user].get('http://localhost:3000');
-//
-//     this.driver[user].wait(until.elementLocated(By.className('Header')));
-//
-//     //FIND LOGIN BUTTON AND THEN CLICK
-//     // const productName = await productElements[i].findElement(By.tagName('h3')).getText();
-//     const loginButton = await this.driver[user].findElements(By.className('Header__btn'))[0];
-//     console.log(loginButton)
-//     // const xxx = await buttons[0].findElement(By.tagName('h3')).getText();
-//
-// });
-// When(/^user "([^"]*)" sends a "([^"]*)" to user "([^"]*)"$/, function (who, what, whom) {
-//
-// });
-// Then(/^user "([^"]*)" sees "([^"]*)" " in the message window$/, function () {
-//
-// });
-//
-// Then(/^user "([^"]*)" sees "([^"]*)" in the message window$/, function () {
-//
-// });
