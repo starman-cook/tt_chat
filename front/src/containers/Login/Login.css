@@ -1,12 +1,12 @@
 .Login {
     max-width: 500px;
-    margin: 10vh auto 40vh auto;
+    margin: 10vh auto 30vh auto;
     box-sizing: border-box;
     padding: 15px;
     border-radius: 10px;
     box-shadow: 2px 2px 5px gray;
     background: #b6c1b6;
-    height: 35vh;
+    height: 45vh;
 
 }
 .Login__close {
