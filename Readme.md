@@ -2,7 +2,24 @@
 
 ----------
 
-All bash scripts are ready, just write in terminal ./startAllBashScripts.sh
+All bash scripts are ready, just write in terminal all the coomands needed for launch:
+
+
+##1_startBackend.sh##
+
+
+##2_startFrontend.sh##
+
+
+##3_startSockets.sh##
+
+
+##4_installDependenciesTests.sh##
+
+
+##5_launchTests.sh##
+
+
 
 Scripts will start the project and run tests.
 
